@@ -1,7 +1,9 @@
+
 package homework1;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -28,7 +30,7 @@ public class Animator extends JFrame implements ActionListener {
 	// shapes that have been added to this
 	
 	// TODO: Add and initialize a container of shapes called shapes.
-	
+	ArrayList<Shape> shapes;
 
 	/**
 	 * @modifies this
@@ -37,7 +39,10 @@ public class Animator extends JFrame implements ActionListener {
 	 * 			checkbox is selected.
 	 */
 	public Animator() {
+
 		super("Animator");
+
+		shapes = new ArrayList<Shape>();
 
 		// create main panel and menubar
 		mainPanel = (JPanel)createMainPanel();

@@ -1,17 +1,18 @@
+
 package homework1;
 
 import java.awt.*;
+import java.awt.Shape;
 
 
 /**
- * A LocationChaningShape is a Shape that can change its location using its step()
- * method. A LocationChaningShape has a velocity property that determines the speed
+ * A LocationChangingShape is a Shape that can change its location using its step()
+ * method. A LocationChangingShape has a velocity property that determines the speed
  * of location changing.
- * Thus, a typical LocationChaningShape consists of the following set of
+ * Thus, a typical LocationChangingShape consists of the following set of
  * properties: {location, color, shape, size, velocity}
  */
-public abstract class LocationChangingShape extends Shape implements Animatable {
-
+public abstract class LocationChangingShape extends homework1.Shape implements Animatable {
 	// TODO: Write Abstraction Function
 	
 	// TODO: Write Representation Invariant
