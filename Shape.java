@@ -3,7 +3,6 @@ package homework1;
 
 import java.awt.*;
 
-
 /**
  * A Shape is an abstraction of a shape object. A typical Shape consists of
  * a set of properties: {location, color, shape, size}.
@@ -23,7 +22,7 @@ public abstract class Shape implements Cloneable {
     // this.location.x >= 0 && this.location.y >= 0.
 
     /**
-     * Checks to see if the Representation Invariant is being violated.
+     * @effects throws alerts on different assertions of the Representation Invariant
      * @throws AssertionError if the Representation Invariant is being violated.
      */
     private void checkRep() {
@@ -43,16 +42,13 @@ public abstract class Shape implements Cloneable {
     	checkRep();
     }
 
-
     /**
      * @return the top left corner of the bounding rectangle of this.
      */
     public Point getLocation() {
         checkRep();
-    	// TODO: Implement this method
         return (Point)this.location;
     }
-
 
     /**
      * @modifies this
@@ -65,7 +61,6 @@ public abstract class Shape implements Cloneable {
         checkRep();
     }
 
-
     /**
      * @modifies this
      * @effects Resizes this so that its bounding rectangle has the specified
@@ -77,12 +72,10 @@ public abstract class Shape implements Cloneable {
      */
     public abstract void setSize(Dimension dimension) throws ImpossibleSizeException;
 
-    
     /**
      * @return the bounding rectangle of this.
      */
     public abstract Rectangle getBounds();
-  
 
     /**
      * @return true if the given point lies inside the bounding rectangle of
@@ -92,7 +85,6 @@ public abstract class Shape implements Cloneable {
         checkRep();
         return getBounds().contains(point);
     }
-        
 
     /**
      * @return color of this.
@@ -101,7 +93,6 @@ public abstract class Shape implements Cloneable {
         checkRep();
         return color;
     }
-
 
     /**
      * @modifies this
@@ -112,14 +103,12 @@ public abstract class Shape implements Cloneable {
         this.color = color;
     }
 
-
     /**
      * @modifies g
      * @effects Draws this onto g.
      */
     public abstract void draw(Graphics g);
-
-
+    
     /**
      * @effects Creates and returns a copy of this.
      */
