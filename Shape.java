@@ -14,17 +14,30 @@ public abstract class Shape implements Cloneable {
 	private Point location;
 	private Color color;
 
-	
-	// TODO: Write Abstraction Function
-	
-	// TODO: Write Representation Invariant
-	
+	// Abstraction Function:
+    // A Shape S is invalid if its location is out of the frame's boundaries or null, or its color is null.
+
+    // Representation Invariant:
+    // this.color != null
+    // this.location != null
+    // this.location.x >= 0 && this.location.y >= 0.
+
+    /**
+     * Checks to see if the Representation Invariant is being violated.
+     * @throws AssertionError if the Representation Invariant is being violated.
+     */
+    private void checkRep() {
+        assert this.color != null : "Color of Shape cannot be null";
+        assert this.location != null : "Location of Shape cannot be null";
+        assert this.location.getX() >= 0 : "Location's X value is out of upper left corner's boundaris";
+        assert this.location.getY() >= 0 : "Location's Y value is out of upper left corner's boundaris";
+    }
 	
 	/**
 	 * @effects Initializes this with a a given location and color.
 	 */
     public Shape(Point location, Color color) {
-        CheckRep();
+        checkRep();
         setLocation(location);
     	setColor(color);
     	checkRep();
@@ -37,8 +50,7 @@ public abstract class Shape implements Cloneable {
     public Point getLocation() {
         checkRep();
     	// TODO: Implement this method
-
-        CheckRep();
+        return (Point)this.location;
     }
 
 
@@ -48,9 +60,9 @@ public abstract class Shape implements Cloneable {
      * 			returns location after call has completed.
      */
     public void setLocation(Point location) {
-    	CheckRep();
+    	checkRep();
         this.location = (Point)location.clone();
-        CheckRep();
+        checkRep();
     }
 
 
@@ -77,7 +89,7 @@ public abstract class Shape implements Cloneable {
      * 		   this and false otherwise.
      */
     public boolean contains(Point point) {
-        CheckRep();
+        checkRep();
         return getBounds().contains(point);
     }
         
@@ -86,7 +98,7 @@ public abstract class Shape implements Cloneable {
      * @return color of this.
      */
     public Color getColor() {
-        CheckRep();
+        checkRep();
         return color;
     }
 
@@ -96,7 +108,7 @@ public abstract class Shape implements Cloneable {
      * @effects Sets color of this.
      */
     public void setColor(Color color) {
-        CheckRep();
+        checkRep();
         this.color = color;
     }
 
@@ -112,9 +124,9 @@ public abstract class Shape implements Cloneable {
      * @effects Creates and returns a copy of this.
      */
     public Object clone() {
-        CheckRep();
+        checkRep();
         // TODO: Implement this method
 
-        CheckRep();
+        checkRep();
     }
 }
