@@ -5,6 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import java.util.Iterator;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Random;
+
 
 /**
  * Main application class for exercise #1.
@@ -28,9 +33,7 @@ public class Animator extends JFrame implements ActionListener {
 	private JPanel mainPanel;
 
 	// shapes that have been added to this
-	
-	// TODO: Add and initialize a container of shapes called shapes.
-	ArrayList<Shape> shapes;
+	private ArrayList<Shape> shapes = new ArrayList<>();
 
 	/**
 	 * @modifies this
@@ -42,8 +45,6 @@ public class Animator extends JFrame implements ActionListener {
 
 		super("Animator");
 
-		shapes = new ArrayList<Shape>();
-
 		// create main panel and menubar
 		mainPanel = (JPanel)createMainPanel();
 		getContentPane().add(mainPanel);
@@ -54,11 +55,14 @@ public class Animator extends JFrame implements ActionListener {
         Timer timer = new Timer(40, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (animationCheckItem.isSelected()) {
-                	// TODO: Add code for making one animation step for all
-                	// 		 shapes in this
-
-                	
-
+                	Shape currentShape = null;
+					Iterator<Shape> timerIterator = shapes.iterator();
+					while(timerIterator.hasNext()) {
+						currentShape = timerIterator.next();
+						if (currentShape instanceof Animatable) {
+							((Animatable)currentShape).step(mainPanel.getBounds()); //TODO: make sure this is correct, might need to replace "mainPanel" with getContentPane().getBounds()
+						}
+					}
             		repaint();	// make sure that the shapes are redrawn
                 }
             }
@@ -135,10 +139,10 @@ public class Animator extends JFrame implements ActionListener {
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
-
-		//TODO: Add code for drawing all shapes in this
-
-		
+		Iterator<Shape> shapeIterator = shapes.iterator();
+		while (shapeIterator.hasNext()) {
+			shapeIterator.next().draw(getContentPane().getGraphics());
+		}
 	}
 
 
@@ -164,11 +168,8 @@ public class Animator extends JFrame implements ActionListener {
         }
 
 		// Insert a shape
-		else if ((source.equals(rectangleItem)) ||
-      		 	 (source.equals(roundedRectangleItem)) ||
-      		 	 (source.equals(ovalItem)) ||
-      		 	 (source.equals(numberedOvalItem)) ||
-      		 	 (source.equals(sectorItem))) {
+		else if ((source.equals(rectangleItem)) || (source.equals(roundedRectangleItem)) ||
+      		 	 (source.equals(ovalItem)) || (source.equals(numberedOvalItem)) || (source.equals(sectorItem))) {
 
 			// TODO: Add code for creating the appropriate shape such that:
 			// 		 it is completely inside the window's bounds &&

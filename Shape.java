@@ -108,14 +108,21 @@ public abstract class Shape implements Cloneable {
      * @effects Draws this onto g.
      */
     public abstract void draw(Graphics g);
-    
+
     /**
      * @effects Creates and returns a copy of this.
      */
     public Object clone() {
         checkRep();
-        // TODO: Implement this method
-
+        Shape clonedCopy = null;
+        try {
+            clonedCopy = (Shape)super.clone();
+            clonedCopy.setColor(this.color);
+            clonedCopy.setLocation(this.location);
+        } catch (CloneNotSupportedException e) { //shouldn't get here since Object (super) has clone() function
+            e.printStackTrace();
+        }
         checkRep();
+        return clonedCopy;
     }
 }
