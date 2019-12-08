@@ -3,6 +3,7 @@ package homework1;
 
 import java.awt.*;
 import java.awt.Shape;
+import .java.util.Random;
 
 
 /**
@@ -13,9 +14,21 @@ import java.awt.Shape;
  * properties: {location, color, shape, size, velocity}
  */
 public abstract class LocationChangingShape extends homework1.Shape implements Animatable {
-	// TODO: Write Abstraction Function
+    private int velocityX_;
+    private int velocityY_;
+    private Random randInt;
+    private int maxVelocity;
+    private int minVelocity;
+    private int height;
+    private int width;
+
+	// Abstraction Function:
+    // if velocityX_ = 0 the shape stays in its horizontalplace, if velocityX_ > 0 shape moves right, else shape moves left.
+    // if velocityY_ = 0 the shape stays in its vertical place, if velocityX_ > 0 shape moves up, else shape moves down.
 	
-	// TODO: Write Representation Invariant
+	// Representation Invariant:
+    // velocityX_ and velocityY_ can never be more than 5 or less than -5
+    //height and width whould allways be >= 0
 
 	
 	/**
@@ -24,10 +37,16 @@ public abstract class LocationChangingShape extends homework1.Shape implements A
 	 *          object is set to a random integral value i such that
 	 *          -5 <= i <= 5 and i != 0
 	 */
-	LocationChangingShape(Point location, Color color) {
-    	// TODO: Implement this constructor
-
-    
+	LocationChangingShape(Point location, Color color, int height_, int width_) {
+        super(location,color);
+        this.maxVelocity = 5;
+        this.minVelocity = -5;
+        this.randInt = new Random();
+        this.velocityX_ = randInt.nextInt(((maxVelocity - minVelocity) + 1)+minVelocity);
+        this.velocityY_ = randInt.nextInt(((maxVelocity - minVelocity) + 1)+minVelocity);
+        this.height = height_;
+        this.width = width_;
+        checkRep();
     }
 
 
@@ -35,8 +54,8 @@ public abstract class LocationChangingShape extends homework1.Shape implements A
      * @return the horizontal velocity of this.
      */
     public int getVelocityX() {
-    	// TODO: Implement this method
-
+        checkRep();
+        return this.velocityX_;
     	
     }
 
@@ -45,9 +64,8 @@ public abstract class LocationChangingShape extends homework1.Shape implements A
      * @return the vertical velocity of this.
      */
     public int getVelocityY() {
-    	// TODO: Implement this method
-
-    	
+        checkRep();
+    	return this.velocityY_;
     }
 
 
@@ -57,9 +75,10 @@ public abstract class LocationChangingShape extends homework1.Shape implements A
      * 			vertical velocity of this to velocityY.
      */
     public void setVelocity(int velocityX, int velocityY) {
-    	// TODO: Implement this method
-
-    	
+        checkRep();
+    	this.velocityX_ = velocityX;
+        this.velocityY_ = velocityY;
+        checkRep();    	
     }
 
 
@@ -80,8 +99,44 @@ public abstract class LocationChangingShape extends homework1.Shape implements A
      * 			p = p + v
      */
     public void step(Rectangle bound) {
-    	// TODO: Implement this method
+        checkRep();
+    	if(!bound.contains(super.Point.getX(), super.Point.getY(), this.width, this.height) || 
+            !bound.contains(super.Point.getX() + velocityX_, super.Point.getY() + velocityY_, this.width, this.height){
+                if(!bound.contains(super.Point.getX() + velocityX_, super.Point.getY(), this.width, this.height){
+                    this.velocityX_ = -this.velocityX_;
+                }
+                if(!bound.contains(super.getLocation().getX(), super.getLocation().getY() + velocityY_, this.width, this.height){
+                    this.velocityY_ = -this.velocityY_;
+                }
+            } 
+            super.setLocation(super.getLocation().getX() + velocityX_, super.getLocation().getY() + velocityY_);
+        checkRep();
+    }
 
-    	
+    /**
+     * Checks to see if the Representation Invariant is being violated.
+     * @throws AssertionError if the Representation Invariant is being violated.
+     */
+    private void checkRep(){
+        assert this.velocityX_ >= -5 :
+            "horizontal velocity cannot be less than -5";
+        if(this.velocityX_ > -5){
+            assert this.velocityX_ <=5 : 
+                "horizontal velocity cannot be more than 5";
+        }
+
+        assert this.velocityY_ >= -5 :
+            "vertical velocity cannot be less than -5";
+        if(this.velocityY_ > -5){
+            assert this.velocityY_ <=5 : 
+                "vertical velocity cannot be more than 5";
+        }
+        assert this.width >=0 :
+            "bounding rectangle should allways have non negative width value";
+        if(this.width >= 0){
+            assert this.height >=0 :
+                "bounding rectangle should allways have non negative height value";
+        }
+
     }
 }

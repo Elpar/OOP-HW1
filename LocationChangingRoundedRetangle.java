@@ -8,4 +8,5 @@ public class LocationChangingRoundedRetangle extends LocationChangingRectangle {
     LocationChangingRoundedRetangle(Point location, Color color) {
         super(location, color);
     }
+    
 }
