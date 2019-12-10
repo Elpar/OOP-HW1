@@ -170,14 +170,34 @@ public class Animator extends JFrame implements ActionListener {
 		// Insert a shape
 		else if ((source.equals(rectangleItem)) || (source.equals(roundedRectangleItem)) ||
       		 	 (source.equals(ovalItem)) || (source.equals(numberedOvalItem)) || (source.equals(sectorItem))) {
-
-			// TODO: Add code for creating the appropriate shape such that:
-			// 		 it is completely inside the window's bounds &&
-			//		 its location and size are randomly selected &&
-			//		 1/10*WINDOW_WIDTH <= shape.width < 3/10*WINDOW_WIDTH &&
-			//		 1/10*WINDOW_HEIGHT <= shape.height < 3/10*WINDOW_HEIGHT
-		
-			
+			Random rand = new Random();
+			int maxDimX = WINDOW_WIDTH/10 + rand.nextInt(3*WINDOW_WIDTH/10);
+			int maxDimY = WINDOW_HEIGHT/10 + rand.nextInt(3*WINDOW_HEIGHT/10);
+			Dimension dim = new Dimension(maxDimX, maxDimY);
+			Rectangle windowBounds = getContentPane().getBounds();
+			int boundX = windowBounds.width-dim.width;
+			int boundY = windowBounds.height-dim.height-menuBar.getHeight();
+			Point originPoint = new Point(rand.nextInt(boundX), rand.nextInt(boundY));
+			Color newColor = new Color(rand.nextInt());
+			Shape newShape;
+			if (source.equals(rectangleItem)) {
+				newShape = new LocationChangingRectangle(originPoint, newColor);
+			} else if (source.equals(roundedRectangleItem)) {
+				newShape = new LocationChangingRoundedRetangle(originPoint, newColor);
+			} else if (source.equals(ovalItem)) {
+				newShape = new LocationChangingOval(originPoint, newColor);
+			} else if (source.equals(numberedOvalItem)) {
+				newShape = new LocationChangingNumberedOval(originPoint, newColor);
+			} else {
+				newShape = new AngleChangingSector(originPoint, newColor, rand.nextInt(360),rand.nextInt(360)); //TODO: fix AngleChangingSector, according to the instructions it needs to get 2 more variables!
+			}
+			//add dimension by calling setSize
+			try {
+				newShape.setSize(dim);
+			} catch (ImpossibleSizeException exception) {
+				dim = exception.getSuggestedDimension(); //suggesting a new dimension
+			}
+			shapes.add(newShape);
 			repaint();
 		}
 
