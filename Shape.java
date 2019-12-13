@@ -36,7 +36,7 @@ public abstract class Shape implements Cloneable {
 	 * @effects Initializes this with a a given location and color.
 	 */
     public Shape(Point location, Color color) {
-        checkRep();
+        //checkRep();
         setLocation(location);
     	setColor(color);
     	checkRep();
